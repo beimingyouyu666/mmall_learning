@@ -151,4 +151,46 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="checkUsername"  resultType="int">
+    SELECT count(1) FROM mmall_user WHERE  username=#{username}
+  </select>
+
+  <select id="checkEmail"  resultType="int">
+    SELECT count(1) FROM mmall_user WHERE  email=#{email}
+  </select>
+
+  <select id="selectLogin"  resultType="com.mmall.pojo.User">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM mmall_user WHERE  username=#{username} and password=#{password}
+  </select>
+
+  <select id="selectQuestionByUsername"  resultType="string">
+    SELECT question
+    FROM mmall_user WHERE  username=#{username}
+  </select>
+
+
+  <select id="checkAnswer"  resultType="int">
+    SELECT count(1)
+    FROM mmall_user WHERE  username=#{username} and question=#{question} and answer=#{answer}
+  </select>
+
+  <update id="updatePasswordByUsername">
+    UPDATE  mmall_user
+    SET password=#{password}
+    where username={username}
+  </update>
+
+  <select id="checkPassword"  resultType="int">
+    SELECT count(1)
+    FROM mmall_user WHERE  id=#{id} and password=#{password}
+  </select>
+
+  <select id="checkEmailByUserId" resultType="int" parameterType="map">
+    select count(1) from mmall_user
+    where email = #{email}
+    and id != #{userId}
+  </select>
 </mapper>
