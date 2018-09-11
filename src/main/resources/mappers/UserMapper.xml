@@ -160,7 +160,7 @@
     SELECT count(1) FROM mmall_user WHERE  email=#{email}
   </select>
 
-  <select id="selectLogin"  resultType="com.mmall.pojo.User">
+  <select id="selectLogin"   resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"></include>
     FROM mmall_user WHERE  username=#{username} and password=#{password}
@@ -180,7 +180,7 @@
   <update id="updatePasswordByUsername">
     UPDATE  mmall_user
     SET password=#{password}
-    where username={username}
+    where username=#{username}
   </update>
 
   <select id="checkPassword"  resultType="int">

@@ -11,7 +11,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 @Service(value = "iUserService")
@@ -66,12 +65,13 @@ public class UserServiceImpl implements IUserService {
                 if(resultCount > 0 ){
                     return ServerResponse.createByErrorMessage("用户名已存在");
                 }
-            }
-            if(Const.EMAIL.equals(type)){
+            }else if(Const.EMAIL.equals(type)){
                 int resultCount = userMapper.checkEmail(str);
                 if(resultCount > 0 ){
                     return ServerResponse.createByErrorMessage("email已存在");
                 }
+            }else{
+                return ServerResponse.createByErrorMessage("参数错误");
             }
         }else{
             return ServerResponse.createByErrorMessage("参数错误");
@@ -174,6 +174,20 @@ public class UserServiceImpl implements IUserService {
         user.setPassword(org.apache.commons.lang3.StringUtils.EMPTY);
         return ServerResponse.createBySuccess(user);
 
+    }
+
+    //backend
+
+    /**
+     * 校验是否是管理员
+     * @param user
+     * @return
+     */
+    public ServerResponse checkAdminRole(User user){
+        if(user != null && user.getRole().intValue() == Const.Role.ROLE_ADMIN){
+            return ServerResponse.createBySuccess();
+        }
+        return ServerResponse.createByError();
     }
 
 }
