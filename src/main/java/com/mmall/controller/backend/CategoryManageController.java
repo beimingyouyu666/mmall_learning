@@ -87,7 +87,7 @@ public class CategoryManageController {
      * @return
      */
     @RequestMapping(value = "/get_deep_category.do")
-    public ServerResponse<String> getDeepCategory(@RequestParam(value = "categoryId" ,defaultValue = "0") Integer categoryId
+    public ServerResponse getDeepCategory(@RequestParam(value = "categoryId" ,defaultValue = "0") Integer categoryId
         ,HttpSession httpSession){
         User user = (User)httpSession.getAttribute(Const.CURRENT_USER);
         if(user == null){
@@ -98,7 +98,7 @@ public class CategoryManageController {
         if(!iUserService.checkAdminRole(user).isSuccess()){
             return ServerResponse.createByErrorMessage("无权限操作,需要管理员权限");
         }
-        return null;
+        return iCategoryService.getDeepCategory(categoryId);
     }
 
 }
