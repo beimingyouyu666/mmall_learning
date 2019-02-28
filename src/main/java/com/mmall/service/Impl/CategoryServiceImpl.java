@@ -75,6 +75,12 @@ public class CategoryServiceImpl implements ICategoryService {
         return ServerResponse.createBySuccess(categoryIdList);
     }
 
+    /**
+     * 递归查询出节点信息和所有子节点
+     * @param categorySet
+     * @param categoryId
+     * @return
+     */
     private Set<Category> getDeep(Set<Category> categorySet,Integer categoryId){
         Category category = categoryMapper.selectByPrimaryKey(categoryId);
         if (category == null){
