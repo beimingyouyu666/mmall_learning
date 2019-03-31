@@ -116,4 +116,40 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="queryCartByUserId" resultType="com.mmall.pojo.Cart">
+    select <include refid="Base_Column_List"/> from mmall_cart
+    where user_id = #{userId}
+  </select>
+
+  <select id="queryCheckStatus" resultType="java.lang.Integer">
+    select count(1) from mmall_cart
+    where user_id = #{userId} and checked = 0
+  </select>
+
+  <select id="queryCartByUserIdProductId" resultType="com.mmall.pojo.Cart">
+    select <include refid="Base_Column_List"/>
+    from mmall_cart
+    where user_id = #{userId} and product_id = #{productId}
+  </select>
+
+  <delete id="deleteByUserIdProductId">
+    delete from mmall_cart
+    where user_id = #{userId} and product_id = #{productId}
+  </delete>
+
+  <select id="updateCheckStatus" parameterType="map" resultType="java.lang.Integer">
+    update mmall_cart
+    set checked = #{checked},
+    update_time = now()
+    where user_id = #{userId}
+    <if test="productId != null">
+      and product_id = productId
+    </if>
+  </select>
+
+  <select id="queryProductCount" resultType="java.lang.Integer">
+    select ifnull(sum(quantity),0) as count from mmall_cart
+    where user_id = #{userId}
+  </select>
 </mapper>

@@ -16,6 +16,19 @@
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
+  <resultMap id="resultMap" type="com.mmall.pojo.OrderItem">
+    <result column="id" property="id"/>
+    <result column="user_id" property="userId"/>
+    <result column="order_no" property="orderNo"/>
+    <result column="product_id" property="productId"/>
+    <result column="product_name" property="productName"/>
+    <result column="product_image" property="productImage"/>
+    <result column="current_unit_price" property="currentUnitPrice"/>
+    <result column="quantity" property="quantity"/>
+    <result column="total_price" property="totalPrice"/>
+    <result column="create_time" property="createTime"/>
+    <result column="update_time" property="updateTime"/>
+  </resultMap>
   <sql id="Base_Column_List">
     id, user_id, order_no, product_id, product_name, product_image, current_unit_price, 
     quantity, total_price, create_time, update_time
@@ -163,4 +176,12 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="queryOrderItemsByOrderNo" resultMap="BaseResultMap" parameterType="map">
+    select <include refid="Base_Column_List"/>
+    from mmall_order_item
+    where user_id = #{userId} and order_no = #{orderNo}
+  </select>
+
+
 </mapper>

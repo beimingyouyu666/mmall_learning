@@ -28,6 +28,7 @@ public class LoginFilter implements Filter {
         noFilter.add("/user/forget_get_question.do");
         noFilter.add("/user/forget_check_answer.do");
         noFilter.add("/user/forget_reset_password.do");
+        noFilter.add("/order/alipay_callback.do");
     }
 
     Logger logger = LoggerFactory.getLogger(LoginFilter.class);
